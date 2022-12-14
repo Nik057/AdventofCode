@@ -2,7 +2,8 @@
 values = [l.strip() for l in open('day1_data.txt')]
 
 elf_dict = {}
-max_value = {'value': 0, 'id': 0}  # max_value contains the max cal found and the index corresponding to that elf
+# max_value contains the max cal found
+list_max = []
 counter1 = 0  # to keep track of index in dictionary
 
 for cal_val in ('\n'.join(values)).split('\n\n'):  # for each value separated by double /n
@@ -17,12 +18,14 @@ for cal_val in ('\n'.join(values)).split('\n\n'):  # for each value separated by
         elf_dict[counter1][counter2][f'cal_item_{counter2}'] = x
         counter2 += 1
 
-    elf_dict[counter1][f'elf_totcal'] = sum  # save sum of calories
-    if max_value['value'] < sum:
-        max_value['value'] = sum
-        max_value['id'] = counter1
+    elf_dict[counter1]['totcal'] = sum  # save sum of calories
 
     counter1 += 1
+for key in range(0, len(elf_dict)):
+    # generate a list ordered by greates num of call (decreasing)
+    list_max.append(elf_dict[key]['totcal'])
+merged = sorted(list_max, reverse=True)
 
-print(f"the max calorie value found is: {max_value['value']} and it is from elf: {max_value['id']}")
+print(f"the max calorie value found is: {merged[0]} "
+      f"and the sum of the first 3 cal ammount is: {merged[0] + merged[1] + merged[2]}")
 
